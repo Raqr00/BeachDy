@@ -1,0 +1,306 @@
+﻿@model List<PDC_BeachDy.Models.Ad>
+
+@{
+    ViewBag.Title = "My_Ads";
+
+    string currentAction = ViewContext.RouteData.Values["action"].ToString();
+    string currentController = ViewContext.RouteData.Values["controller"].ToString();
+}
+
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>MY ADS</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--====== Favicon Icon ======-->
+    <link rel="shortcut icon" href="@Url.Content("~/content/images/favicon.png")" type="image/png" />
+
+    <!--====== CSS Files ======-->
+    <link rel="stylesheet" href="@Url.Content("~/content/css/magnific-popup.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/nice-select.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/slick.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/ion.rangeSlider.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/fontawesome.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/default.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/style.css")" />
+</head>
+
+<body class="gray-bg">
+
+    <!-- PRELOADER -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="ytp-spinner">
+                <div class="ytp-spinner-container">
+                    <div class="ytp-spinner-rotator">
+                        <div class="ytp-spinner-left">
+                            <div class="ytp-spinner-circle"></div>
+                        </div>
+                        <div class="ytp-spinner-right">
+                            <div class="ytp-spinner-circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header_area">
+        <div class="header_navbar">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg">
+                    <a class="navbar-brand" href="@Url.Action("Home", "BeachDY")">
+                        <img src="@Url.Content("~/content/images/logo.png")" alt="logo" width="320px" />
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                        <span class="toggler-icon"></span>
+                        <span class="toggler-icon"></span>
+                        <span class="toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                        <ul class="navbar-nav m-auto">
+                            <li><a href="@Url.Action("Home", "BeachDY")">Home <span class="line"></span></a></li>
+                            <li><a href="@Url.Action("Categories", "BeachDY")">Categories <span class="line"></span></a></li>
+
+                            @if (Session["UserId"] == null)
+                            {
+                                <li><a href="@Url.Action("SignIn", "BeachDY")">Sign In <span class="line"></span></a></li>
+                                <li><a href="@Url.Action("SignUp", "BeachDY")">Sign Up <span class="line"></span></a></li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a class="active" href="#">My Account <i class="fa fa-angle-down"></i> <span class="line"></span></a>
+                                    <ul class="sub-menu">
+                                        <li><a href="@Url.Action("DashBoard", "BeachDY")">Dashboard</a></li>
+                                        <li><a href="@Url.Action("My_Ads", "BeachDY")">My Ads</a></li>
+                                        <li><a href="@Url.Action("My_Favourites", "BeachDY")">My Favourites</a></li>
+
+                                    </ul>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+
+                    @if (Session["UserId"] != null)
+                    {
+                        <div class="navbar_btn" style="margin-left: -230px;">
+                            <ul>
+
+                                <li><a class="sign-up" href="@Url.Action("Post_Ad", "BeachDY")">Post Ads</a></li>
+                                <li><a class="navbar-nav" href="@Url.Action("Sign_out", "BeachDY")"> Sign Out </a></li>
+                            </ul>
+                        </div>
+                    }
+                </nav>
+            </div>
+        </div>
+        <div class="page_banner bg_cover" style="background-image: url('@Url.Content("~/content/images/page-banner.jpg")')">
+            <div class="container">
+                <div class="page_banner_content">
+                    <h3 class="title">@ViewBag.PageTitle</h3>
+                    <ul class="breadcrumb">
+                        <li><a href="@Url.Action("Home", "BeachDY")">Home</a></li>
+                        <li>@ViewBag.PageTitle</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+
+    <section class="post_ads_page pt-70 pb-120">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3">
+                    <div class="sidebar_profile mt-50">
+                        <div class="profile_user">
+                            <div class="user_author d-flex align-items-center">
+                                <div class="author">
+                                    <img src="~/assets/images/author-1.jpg" alt="" />
+                                </div>
+                                <div class="user_content media-body">
+                                    <h6 class="author_name">
+                                        @if (Session["UserName"] != null)
+                                        {
+                                            @Session["UserName"]
+                                        }
+                                        else
+                                        {
+                                            @:"Guest"
+                                        }
+                                    </h6>
+                                    <p>Administrator</p> <!-- You can dynamically bind role here if needed -->
+                                </div>
+                            </div>
+                            <div class="user_list">
+                                <ul>
+                                    <li>
+                                        <a href="@Url.Action("My_Ads", "BeachDY")" class="@(currentAction == "My_Ads" ? "active" : "")">
+                                            <i class="fal fa-tachometer-alt-average"></i>Dashboard
+
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("post_Ad", "BeachDY")" class="@(currentAction == "post_Ad" ? "active" : "")">
+                                            <i class="fal fa-layer-group"></i> Post Ad
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("My_Favourite", "BeachDY")" class="@(currentAction == "Favourites" ? "active" : "")">
+                                            <i class="fal fa-heart"></i> My Favourites
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Sign_out", "BeachDY")">
+                                            <i class="fal fa-sign-out"></i> Sign Out
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9">
+                    <div class="my_ads mt-50">
+                        <div class="post_title">
+                            <h5 class="title">My Ads</h5>
+                        </div>
+                        <div class="my_ads_menu">
+                            <ul class="ads_menu">
+                                <li><a class="active" href="#">All Ads (@Model.Count())</a></li>
+                                @*<li><a href="#">Published (@Model.Count(a => a.Status == "Published"))</a></li>*@
+                                <li><a href="#">Sold (@Model.Count(a => a.Status == "Sold"))</a></li>
+                                <li><a href="#">Active (@Model.Count(a => a.Status == "Active"))</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="ads_table table-responsive mt-30">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="checkbox">
+                                            <div class="table_checkbox">
+                                                <input type="checkbox" id="checkbox1" />
+                                                <label for="checkbox1"></label>
+                                            </div>
+                                        </th>
+                                        <th class="photo">Photo</th>
+                                        <th class="title">Title</th>
+                                        <th class="category">Category</th>
+                                        <th class="status">Ad Status</th>
+                                        <th class="price">Price</th>
+                                        <th class="action">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var ad in Model)
+                                    {
+                                        <tr>
+                                            <td class="checkbox">
+                                                <div class="table_checkbox">
+                                                    <input type="checkbox" id="checkbox_@ad.Id" />
+                                                    <label for="checkbox_@ad.Id"></label>
+                                                </div>
+                                            </td>
+                                            <td class="photo">
+                                                <div class="table_photo">
+                                                    <img src="@Url.Content("~/wwwroot/" + ad.ImagePath)" alt="ad image" />
+                                                </div>
+                                            </td>
+                                            <td class="title">
+                                                <div class="table_title">
+                                                    <h6 class="titles">@ad.Title</h6>
+                                                    <p>Ad ID: @ad.Id</p>
+                                                </div>
+                                            </td>
+                                            <td class="category">
+                                                <div class="table_category">
+                                                    <p>@ad.Category</p>
+                                                </div>
+                                            </td>
+                                            <td class="status">
+                                                <div class="table_status">
+                                                    <span class="@ad.Status.ToLowerInvariant()">@ad.Status</span>
+                                                </div>
+                                            </td>
+                                            <td class="price">
+                                                <div class="table_price">
+                                                    <span>
+                                                        @(ad.PriceOnCall ? "Price on Call" : ad.Price?.ToString() ?? "N/A")
+                                                    </span>
+                                                </div>
+                                            </td>
+
+
+                                            <td class="action">
+                                                <div class="table_action">
+                                                    <ul>
+                                                        <li><a href="@Url.Action("Product_Details", "BeachDY", new { id = ad.Id })"><i class="fal fa-eye"></i></a></li>
+                                                        <li><a href="@Url.Action("Edit", "BeachDY", new { id = ad.Id })"><i class="fal fa-pencil"></i></a></li>
+                                                        <li>
+                                                            <a href="#" onclick="confirmDelete(@ad.Id)">
+                                                                <i class="fal fa-trash-alt"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="footer_area">
+        <div class="footer_copyright pt-15 pb-30">
+            <div class="container">
+                <div class="footer_copyright_wrapper text-center d-sm-flex justify-content-between align-items-center">
+                    <div class="copyright mt-15">
+                        <p>Designed and Developed by <a href="" rel="nofollow">Raqeeb Ahmed</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP -->
+    <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+    <!-- Scripts -->
+    <script>
+        function confirmDelete(adId) {
+            if (confirm("Are you sure you want to delete this ad?")) {
+                window.location.href = '/BeachDY/DeleteConfirmed/' + adId;
+            }
+        }
+    </script>
+    <script src="@Url.Content("~/content/js/vendor/jquery-1.12.4.min.js")"></script>
+    <script src="@Url.Content("~/content/js/vendor/modernizr-3.7.1.min.js")"></script>
+    <script src="@Url.Content("~/content/js/popper.min.js")"></script>
+    <script src="@Url.Content("~/content/js/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/content/js/slick.min.js")"></script>
+    <script src="@Url.Content("~/content/js/jquery.magnific-popup.min.js")"></script>
+    <script src="@Url.Content("~/content/js/jquery.nice-select.min.js")"></script>
+    <script src="@Url.Content("~/content/js/waypoints.min.js")"></script>
+    <script src="@Url.Content("~/content/js/jquery.counterup.min.js")"></script>
+    <script src="@Url.Content("~/content/js/ion.rangeSlider.min.js")"></script>
+    <script src="@Url.Content("~/content/js/ajax-contact.js")"></script>
+    <script src="@Url.Content("~/content/js/main.js")"></script>
+</body>
+</html>

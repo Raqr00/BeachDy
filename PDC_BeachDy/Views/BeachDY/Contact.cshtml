@@ -1,0 +1,244 @@
+﻿
+@{
+    ViewBag.Title = "Contact";
+}
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Contact</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--====== Favicon Icon ======-->
+    <link rel="shortcut icon" href="@Url.Content("~/content/images/favicon.png")" type="image/png" />
+
+    <!--====== CSS Files ======-->
+    <link rel="stylesheet" href="@Url.Content("~/content/css/magnific-popup.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/nice-select.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/slick.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/ion.rangeSlider.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/fontawesome.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/default.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/style.css")" />
+</head>
+
+<body class="gray-bg">
+
+    <!-- PRELOADER -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="ytp-spinner">
+                <div class="ytp-spinner-container">
+                    <div class="ytp-spinner-rotator">
+                        <div class="ytp-spinner-left">
+                            <div class="ytp-spinner-circle"></div>
+                        </div>
+                        <div class="ytp-spinner-right">
+                            <div class="ytp-spinner-circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header_area ">
+        <div class="header_navbar">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg">
+                    <a class="navbar-brand" href="@Url.Action("Home", "BeachDy")">
+                        <img src="@Url.Content("~/content/images/logo.png")" alt="logo" width="320px" />
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                        <span class="toggler-icon"></span>
+                        <span class="toggler-icon"></span>
+                        <span class="toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                        <ul class="navbar-nav m-auto">
+                            <li><a href="@Url.Action("Home", "BeachDY")">Home <span class="line"></span></a></li>
+                            <li><a class="active" href="@Url.Action("Categories", "BeachDY")">Categories <span class="line"></span></a></li>
+                            <li>
+                                <a href="#">Pages <i class="fa fa-angle-down"></i> <span class="line"></span></a>
+                                <ul class="sub-menu">
+                                    <li><a href="@Url.Action("About", "BeachDY")">About</a></li>
+                                    <li><a href="@Url.Action("Listing", "BeachDY")">Listing</a></li>
+                                    <li><a href="@Url.Action("ProductDetails", "BeachDY")">Product Details</a></li>
+                                    <li><a href="@Url.Action("Error", "BeachDY")">404</a></li>
+                                    <li><a href="@Url.Action("SignIn", "BeachDY")">Sign In</a></li>
+                                    <li><a href="@Url.Action("SignUp", "BeachDY")">Sign Up</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="@Url.Action("Contact", "BeachDY")">Contact <span class="line"></span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="navbar_btn" style="margin-left: -50px;">
+                        <ul>
+                            <li>
+                                <div class="dropdown">
+                                    <a href="#" class="dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown">My Account</a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <ul>
+                                            <li><a href="@Url.Action("DashBoard", "BeachDY")">Dashboard</a></li>
+                                            <li><a href="@Url.Action("Profile_Settings", "BeachDY")">Profile Settings</a></li>
+                                            <li><a href="@Url.Action("My_Ads", "BeachDY")">My Ads</a></li>
+                                            @*<li><a href="@Url.Action("Messages", "BeachDY")">Offers/Messages</a></li>*@
+                                            <li><a href="@Url.Action("Payments", "BeachDY")">Payments</a></li>
+                                            <li><a href="@Url.Action("Favourites", "BeachDY")">My Favourites</a></li>
+                                            <li><a href="@Url.Action("SIgnIn", "BeachDY")">Sign Out</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li><a class="sign-up" href="@Url.Action("Post_Ad", "BeachDY")">Post Ads</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <div class="page_banner bg_cover" style="background-image: url('@Url.Content("~/content/images/page-banner.jpg")')">
+            <div class="container">
+                <div class="page_banner_content">
+                    <h3 class="title">All Categories</h3>
+                    <ul class="breadcrumb">
+                        <li><a href="@Url.Action("Home", "BeachDY")">Home</a></li>
+                        <li>All Categories</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTACT  FORM -->
+
+    <section class="contact_page pt-120 pb-120">
+        <div class="container">
+            <div class="contact_map">
+                <div class="gmap_canvas">
+                    <iframe id="gmap_canvas"
+                            src="https://maps.google.com/maps?q=Mission%20District%2C%20San%20Francisco%2C%20CA%2C%20USA&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
+                            frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="contact_form mt-30">
+                        <div class="contact_title">
+                            <h5 class="title">Send Message Us</h5>
+                        </div>
+                        @using (Html.BeginForm("SendMessage", "Contact", FormMethod.Post, new { @id = "contact-form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="contact_form_wrapper">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="single_form">
+                                            @Html.TextBox("name", null, new { placeholder = "Name", @class = "form-control" })
+                                            <i class="fal fa-user"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="single_form">
+                                            @Html.TextBox("email", null, new { type = "email", placeholder = "Email", @class = "form-control" })
+                                            <i class="fal fa-envelope"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="single_form">
+                                            @Html.TextBox("subject", null, new { placeholder = "Subject", @class = "form-control" })
+                                            <i class="far fa-i-cursor"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="single_form">
+                                            @Html.TextArea("message", null, new { placeholder = "Message", @class = "form-control", rows = 5 })
+                                            <i class="fal fa-edit"></i>
+                                        </div>
+                                    </div>
+                                    <p class="form-message"></p>
+                                    <div class="col-md-12">
+                                        <div class="single_form">
+                                            <button type="submit" class="main-btn">Send Message</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="contact_info">
+                        <div class="contact_title mt-30">
+                            <h5 class="title">Get In Touch</h5>
+                        </div>
+                        <p>Lorem Ipsum Is simply dummy text of the printing and typesetting Industry. Lorem Ipsum has been the Industry's</p>
+
+                        <div class="single_info d-flex">
+                            <div class="info_icon">
+                                <i class="far fa-map-marker-alt"></i>
+                            </div>
+                            <div class="info_content media-body">
+                                <p>Level 13, 2 Ellzabeth St, Lorem Ipsum Is simply dummy text</p>
+                            </div>
+                        </div>
+                        <div class="single_info d-flex">
+                            <div class="info_icon">
+                                <i class="fal fa-phone"></i>
+                            </div>
+                            <div class="info_content media-body">
+                                <p>+92 0123456789</p>
+                                <p>+92 0123456789</p>
+                            </div>
+                        </div>
+                        <div class="single_info d-flex">
+                            <div class="info_icon">
+                                <i class="fal fa-envelope-open-text"></i>
+                            </div>
+                            <div class="info_content media-body">
+                                <p>info@classified.com</p>
+                                <p>info.classified@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer_area">
+        <div class="footer_copyright pt-15 pb-30">
+            <div class="container">
+                <div class="footer_copyright_wrapper text-center d-sm-flex justify-content-between align-items-center">
+                    <div class="copyright mt-15">
+                        <p>Designed and Developed by <a href="https://graygrids.com/" rel="nofollow">Raqeeb Ahmed</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP -->
+    <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+    <!-- Scripts -->
+    <script src="@Url.Content("~/content/js/vendor/jquery-1.12.4.min.js")"></script>
+    <script src="@Url.Content("~/content/js/vendor/modernizr-3.7.1.min.js")"></script>
+    <script src="@Url.Content("~/content/js/popper.min.js")"></script>
+    <script src="@Url.Content("~/content/js/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/content/js/slick.min.js")"></script>
+    <script src="@Url.Content("~/content/js/jquery.magnific-popup.min.js")"></script>
+    <script src="@Url.Content("~/content/js/jquery.nice-select.min.js")"></script>
+    <script src="@Url.Content("~/content/js/waypoints.min.js")"></script>
+    <script src="@Url.Content("~/content/js/jquery.counterup.min.js")"></script>
+    <script src="@Url.Content("~/content/js/ion.rangeSlider.min.js")"></script>
+    <script src="@Url.Content("~/content/js/ajax-contact.js")"></script>
+    <script src="@Url.Content("~/content/js/main.js")"></script>
+</body>
+</html>

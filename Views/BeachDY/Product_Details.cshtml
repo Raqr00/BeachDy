@@ -1,0 +1,434 @@
+﻿@model PDC_BeachDy.Models.Ad
+
+@{
+    ViewBag.Title = "Product_Details";
+
+}
+
+<!doctype html>
+
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Product Details</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--====== Favicon Icon ======-->
+    <link rel="shortcut icon" href="@Url.Content("~/content/images/favicon.png")" type="image/png" />
+
+    <!--====== CSS Files ======-->
+    <link rel="stylesheet" href="@Url.Content("~/content/css/magnific-popup.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/nice-select.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/slick.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/ion.rangeSlider.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/fontawesome.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/default.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/css/style.css")" />
+</head>
+
+
+<body class="gray-bg">
+
+
+
+    <!-- PRELOADER -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="ytp-spinner">
+                <div class="ytp-spinner-container">
+                    <div class="ytp-spinner-rotator">
+                        <div class="ytp-spinner-left">
+                            <div class="ytp-spinner-circle"></div>
+                        </div>
+                        <div class="ytp-spinner-right">
+                            <div class="ytp-spinner-circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header_area">
+        <div class="header_navbar">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg">
+                    <a class="navbar-brand" href="@Url.Action("Home", "BeachDY")">
+                        <img src="@Url.Content("~/content/images/logo.png")" alt="logo" width="320px" />
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                        <span class="toggler-icon"></span>
+                        <span class="toggler-icon"></span>
+                        <span class="toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                        <ul class="navbar-nav m-auto">
+                            <li><a class="active" href="@Url.Action("Home", "BeachDY")">Home <span class="line"></span></a></li>
+                            <li><a href="@Url.Action("Categories", "BeachDY")">Categories <span class="line"></span></a></li>
+
+                            @if (Session["UserId"] == null)
+                            {
+                                <li><a href="@Url.Action("SignIn", "BeachDY")">Sign In <span class="line"></span></a></li>
+                                <li><a href="@Url.Action("SignUp", "BeachDY")">Sign Up <span class="line"></span></a></li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a href="#">My Account <i class="fa fa-angle-down"></i> <span class="line"></span></a>
+                                    <ul class="sub-menu">
+                                        <li><a href="@Url.Action("DashBoard", "BeachDY")">Dashboard</a></li>
+                                        <li><a href="@Url.Action("My_Ads", "BeachDY")">My Ads</a></li>
+                                        <li><a href="@Url.Action("My_Favourites", "BeachDY")">My Favourites</a></li>
+
+                                    </ul>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+
+                    @if (Session["UserId"] != null)
+                    {
+                        <div class="navbar_btn" style="margin-left: -230px;">
+                            <ul>
+
+                                <li><a class="sign-up" href="@Url.Action("Post_Ad", "BeachDY")">Post Ads</a></li>
+                                <li><a class="navbar-nav" href="@Url.Action("Sign_out", "BeachDY")"> Sign Out </a></li>
+                            </ul>
+                        </div>
+                    }
+                </nav>
+            </div>
+        </div>
+        <div class="page_banner bg_cover" style="background-image: url('@Url.Content("~/content/images/page-banner.jpg")')">
+            <div class="container">
+                <div class="page_banner_content">
+                    <h3 class="title">@ViewBag.PageTitle</h3>
+                    <ul class="breadcrumb">
+                        <li><a href="@Url.Action("Home", "BeachDY")">Home</a></li>
+                        <li>@ViewBag.PageTitle</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+
+
+    <section class="product_details_page pt-70 pb-120">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="product_details mt-50">
+                        <div class="product_image">
+                            <!-- Main Display Image -->
+                            <div class="tab-content" id="mainImageContent">
+                                <img id="mainImage" class="img-fluid mb-3" src="@Url.Content("~/wwwroot/" + Model.ImagePath)" alt="Main Image" />
+                            </div>
+
+                            <!-- Thumbnails List -->
+                            <div class="row mt-3" id="thumbnailList">
+                                @foreach (var img in Model.AdImages)
+                                {
+                                    <div class="col-md-2">
+                                        <img class="img-thumbnail thumb-img" src="@Url.Content("~/wwwroot/" + img.ImagePath)" alt="Thumbnail" style="cursor:pointer;" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const thumbnails = document.querySelectorAll('.thumb-img');
+                                const mainImage = document.getElementById('mainImage');
+
+                                thumbnails.forEach(function (thumb) {
+                                    thumb.addEventListener('click', function () {
+                                        mainImage.src = this.src;
+                                    });
+                                });
+                            });
+                        </script>
+
+
+
+
+                        <div class="product_details_meta d-sm-flex justify-content-between align-items-end">
+                            <div class="product_price">
+                                @if (Model.PriceOnCall)
+                                {
+                                    <span class="price">Price on Call</span>
+                                }
+                                else
+                                {
+                                    <span class="price">Rs @Model.Price</span>
+                                }
+                            </div>
+                            <div class="product_date">
+                                <ul class="meta">
+                                    <li>
+                                        <i class="fa fa-clock-o"></i>
+                                        <a href="#">@Model.CreatedAt.ToString("dd MMMM, yyyy")</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        @*<div class="product_details_features">
+            <div class="product_details_title">
+                <h5 class="title">Features :</h5>
+            </div>
+            <div class="details_features_wrapper d-flex flex-wrap">
+                <div class="single_features d-flex">
+                    <h6 class="features_title">Brand :</h6>
+                    <p>@Model.Category</p>
+                </div>
+                <div class="single_features d-flex">
+                    <h6 class="features_title">Condition :</h6>
+                    <p>New</p>
+                </div>
+                <div class="single_features d-flex">
+                    <h6 class="features_title">Authenticity :</h6>
+                    <p>Original</p>
+                </div>
+            </div>
+        </div>*@
+
+                        <div class="product_details_description">
+                            <div class="product_details_title">
+                                <h5 class="title">Description :</h5>
+                            </div>
+                            <p>@Model.Description</p>
+                        </div>
+
+
+
+
+                        <div class="product_rating mt-30">
+                            <div class="product_rating_top_bar">
+                                <div class="product_details_title">
+                                    <h5 class="title">@Model.Reviews.Count Review@(Model.Reviews.Count > 1 ? "s" : "") :</h5>
+                                </div>
+                                <div class="product_rating_star">
+                                    <ul>
+                                        @{
+                                            int totalRating = Model.Reviews.Sum(r => r.Rating);
+                                            int avgRating = Model.Reviews.Count > 0 ? (int)Math.Round((double)totalRating / Model.Reviews.Count) : 0;
+                                            for (int i = 1; i <= 5; i++)
+                                            {
+                                                if (i <= avgRating)
+                                                {
+                                                    <li><i class="fa fa-star"></i></li>
+                                                }
+                                                else
+                                                {
+                                                    <li><i class="fal fa-star"></i></li>
+                                                }
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+
+                            @foreach (var review in Model.Reviews)
+                            {
+                                <div class="single_rating_author mt-30">
+                                    <div class="rating_author d-flex align-items-center">
+                                        <div class="author_content media-body">
+                                            <h5 class="author_name">@review.Name</h5>
+                                            <span class="date">@review.CreatedAt.ToString("dd MMMM, yyyy")</span>
+                                        </div>
+                                    </div>
+                                    <div class="rating_description">
+                                        <p>@review.ReviewText</p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+
+
+
+
+                        @using (Html.BeginForm("SubmitReview", "BeachDY", FormMethod.Post))
+                        {
+                            <input type="hidden" name="AdId" value="@Model.Id" />
+
+                            <div class="product_rating_form mt-30">
+                                <div class="product_details_title">
+                                    <h5 class="title">Leave Your Review :</h5>
+                                </div>
+
+                                <div class="product_rating_form_wrapper d-flex flex-wrap">
+                                    <div class="product_details_rating_wrapper">
+                                        <div class="product_details_rating mt-20">
+                                            <p><i class="fa fa-star-o"></i> Your Rating</p>
+                                            <ul class="rating_radio">
+                                                <li>
+                                                    <input type="radio" name="rating" id="radio1" value="5" checked>
+                                                    <label for="radio1"></label>
+                                                    <span><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>
+                                                </li>
+                                                <li>
+                                                    <input type="radio" name="rating" id="radio2" value="4">
+                                                    <label for="radio2"></label>
+                                                    <span><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fal fa-star"></i></span>
+                                                </li>
+                                                <li>
+                                                    <input type="radio" name="rating" id="radio3" value="3">
+                                                    <label for="radio3"></label>
+                                                    <span><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fal fa-star"></i><i class="fal fa-star"></i></span>
+                                                </li>
+                                                <li>
+                                                    <input type="radio" name="rating" id="radio4" value="2">
+                                                    <label for="radio4"></label>
+                                                    <span><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fal fa-star"></i><i class="fal fa-star"></i><i class="fal fa-star"></i></span>
+                                                </li>
+                                                <li>
+                                                    <input type="radio" name="rating" id="radio5" value="1">
+                                                    <label for="radio5"></label>
+                                                    <span><i class="fa fa-star"></i><i class="fal fa-star"></i><i class="fal fa-star"></i><i class="fal fa-star"></i><i class="fal fa-star"></i></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="product_details_form">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="single_form">
+                                                    <input type="text" name="name" placeholder="Enter your name . . ." class="form-control" />
+                                                    <i class="fal fa-user"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="single_form">
+                                                    <input type="email" name="email" placeholder="Enter your mail address . . ." class="form-control" />
+                                                    <i class="fal fa-envelope"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="single_form">
+                                                    <textarea name="review" placeholder="Type your review . . ." class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="single_form">
+                                                    <button type="submit" class="main-btn">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                        
+                </div>
+                <div class="col-lg-3">
+                    <div class="product_details_sidebar pt-20">
+
+                        <!-- Ad Owner Section -->
+                        <div class="product_sidebar_owner mt-30">
+                            <div class="product_details_title">
+                                <h5 class="title">Ad Owner :</h5>
+                            </div>
+                            <div class="product_owner_wrapper mt-20">
+                                <div class="owner_author d-flex align-items-center">
+                                    @*<div class="author_image">
+                                        <img src="~/assets/images/author-2.jpg" alt="author" />
+                                    </div>*@
+                                    <div class="author_content media-body">
+                                        <h5 class="author_name">@Model.FirstName</h5>
+                                        @*<p>Member Since 2014</p>*@
+                                    </div>
+                                </div>
+                                <div class="owner_address d-flex">
+                                    <div class="address_icon">
+                                        <i class="far fa-map-marker-alt"></i>
+                                    </div>
+                                    <div class="address_content media-body">
+                                        <p>@Model.Address</p>
+                                        <a href="#">View Store</a>
+                                    </div>
+                                </div>
+                                @*<div class="owner_call">
+                                    <a class="main-btn" href="#"><i class="fal fa-phone"></i> Send Message</a>
+                                </div>*@
+                            </div>
+                        </div>
+
+                        <!-- Contact Seller Form -->
+                        <div class="product_sidebar_contact mt-30">
+                            <div class="product_details_title">
+                                <h5 class="title">Contact Seller :</h5>
+                            </div>
+                            <div class="sidebar_contact_form">
+                                <form asp-controller="Home" asp-action="ContactSeller" method="post">
+                                    @*<div class="single_form">
+                                        <input type="text" name="Name" placeholder="Name" class="form-control" />
+                                    </div>
+                                    <div class="single_form">
+                                        <input type="email" name="Email" placeholder="Mail address" class="form-control" />
+                                    </div>
+                                    <div class="single_form">
+                                        <textarea name="Message" placeholder="Type message" class="form-control"></textarea>
+                                    </div>*@
+                                    <div class="single_form">
+                                        <button type="submit" class="main-btn"><i class="fal fa-paper-plane"></i> @Model.Phone</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer_area">
+        <div class="footer_copyright pt-15 pb-30">
+            <div class="container">
+                <div class="footer_copyright_wrapper text-center d-sm-flex justify-content-between align-items-center">
+                    <div class="copyright mt-15">
+                        <p>Designed and Developed by <a href="" rel="nofollow">Raqeeb Ahmed</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+       
+
+
+    <!-- BACK TO TOP -->
+    <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+    <!-- Scripts -->
+    <script src="@Url.Content("~/content/js/vendor/jquery-1.12.4.min.js")"></script>
+    <script src="@Url.Content("~/content/js/vendor/modernizr-3.7.1.min.js")"></script>
+    <script src="@Url.Content("~/content/js/popper.min.js")"></script>
+    <script src="@Url.Content("~/content/js/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/content/js/slick.min.js")"></script>
+    <script src="@Url.Content("~/content/js/jquery.magnific-popup.min.js")"></script>
+    <script src="@Url.Content("~/content/js/jquery.nice-select.min.js")"></script>
+    <script src="@Url.Content("~/content/js/waypoints.min.js")"></script>
+    <script src="@Url.Content("~/content/js/jquery.counterup.min.js")"></script>
+    <script src="@Url.Content("~/content/js/ion.rangeSlider.min.js")"></script>
+    <script src="@Url.Content("~/content/js/ajax-contact.js")"></script>
+    <script src="@Url.Content("~/content/js/main.js")"></script>
+    ```
+
+
+</body>
+</html>
